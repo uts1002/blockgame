@@ -11,11 +11,14 @@ RUN rm -rf ./*
 COPY index.html .
 COPY game.js .
 
-# nginx 설정 파일 복사 (선택사항)
+# nginx 기본 설정 파일 제거
+RUN rm /etc/nginx/conf.d/default.conf
+
+# nginx 설정 파일 복사
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# 포트 노출
-EXPOSE 80
+# Cloud Run은 PORT 환경변수를 사용하므로 8080 포트 노출
+EXPOSE 8080
 
 # nginx 실행
 CMD ["nginx", "-g", "daemon off;"]
